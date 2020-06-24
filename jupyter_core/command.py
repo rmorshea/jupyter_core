@@ -95,8 +95,7 @@ def main():
             print(paths.jupyter_runtime_dir())
             return
         if args.paths:
-            data = {}
-            data['runtime'] = [paths.jupyter_runtime_dir()]
+            data = {'runtime': [paths.jupyter_runtime_dir()]}
             data['config'] = paths.jupyter_config_path()
             data['data'] = paths.jupyter_path()
             if args.json:
@@ -108,11 +107,11 @@ def main():
                     for p in path:
                         print('    ' + p)
             return
-    
+
     if not subcommand:
         parser.print_usage(file=sys.stderr)
         sys.exit("subcommand is required")
-    
+
     command = 'jupyter-' + subcommand
     try:
         os.execvp(command, sys.argv[1:])

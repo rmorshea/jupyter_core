@@ -78,20 +78,17 @@ def jupyter_runtime_dir():
     falls back on data_dir/runtime otherwise.
     """
     env = os.environ
-    
+
     if env.get('JUPYTER_RUNTIME_DIR'):
         return env['JUPYTER_RUNTIME_DIR']
-    
-    if sys.platform == 'darwin':
-        return pjoin(jupyter_data_dir(), 'runtime')
-    elif os.name == 'nt':
-        return pjoin(jupyter_data_dir(), 'runtime')
-    else:
+
+    if sys.platform != 'darwin' and os.name != 'nt':
         # Linux, non-OS X Unix, AIX, etc.
         xdg = env.get("XDG_RUNTIME_DIR", None)
         if xdg:
             return pjoin(xdg, 'jupyter')
-        return pjoin(jupyter_data_dir(), 'runtime')
+
+    return pjoin(jupyter_data_dir(), 'runtime')
 
 
 if os.name == 'nt':
